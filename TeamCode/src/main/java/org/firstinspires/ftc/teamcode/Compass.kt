@@ -7,9 +7,10 @@ import kotlin.math.abs
 class Compass {
     companion object {
         // PID coefficients
-        const val kP = 0.4
-        const val kI = 0.00108
-        const val kD = 0.0
+        // k_c = 0.7, p_c = 1000/206
+        const val kP = 0.42000
+        const val kI = 0.17304
+        const val kD = 0.25485
 
         const val COMPASS_ROTATIONS_PER_TICK = 3.0/560.0
     }
@@ -32,7 +33,7 @@ class Compass {
         set(target) {
             // Constrain target to between 0 and 2PI
             field = target % (2*PI)
-            if (field < 0) field += 2*PI
+            if (field < 0) field += (2*PI)
         }
 
     // Other factors
@@ -51,6 +52,9 @@ class Compass {
         var angleError = target - angle
         if(angleError > PI) angleError -= (2*PI)
 
+        // If the error < -PI, go the other way (it's shorter)
+        if(angleError < -PI) angleError += (2*PI)
+
         if(firstFrame) deltaTime.reset()
 
         if(abs(angleError) < 0.001) angleError = 0.0
@@ -58,7 +62,7 @@ class Compass {
         p  = kP * angleError
         i += kI * lastError * deltaTime.milliseconds()
         d = if(deltaTime.milliseconds() > 0)
-            kD * (angleError - lastError) / deltaTime.milliseconds()
+            kD * (angleError - lastError)
         else
             0.0
 

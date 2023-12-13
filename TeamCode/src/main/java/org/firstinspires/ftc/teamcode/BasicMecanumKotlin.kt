@@ -18,7 +18,7 @@ import kotlin.math.*
 class BasicMecanumKotlin : OpMode() {
     companion object {
         // CONSTANTS
-        const val YAW_ADJUST_SPEED = 0.005
+        const val YAW_ADJUST_SPEED = 0.02
 
         const val PIXEL_SCOOP_DEPLOYED = 0.4
         const val PIXEL_SCOOP_RETRACTED = 1.0
@@ -130,10 +130,10 @@ class BasicMecanumKotlin : OpMode() {
 
     override fun loop() {
         // Get controller inputs
-        val forward = gamepad1.left_stick_y.toDouble()
+        val forward = -gamepad1.left_stick_y.toDouble()
         val right = gamepad1.left_stick_x.toDouble()
-        val turn = gamepad2.left_stick_x.toDouble()
-        val deltaYawTrim = YAW_ADJUST_SPEED * (gamepad1.right_trigger - gamepad2.left_trigger)
+        val turn = gamepad2.left_stick_x.toDouble() + gamepad1.right_stick_x.toDouble()
+        val deltaYawTrim = YAW_ADJUST_SPEED * (gamepad1.right_trigger - gamepad1.left_trigger)
 
         var armExtensionRate = (gamepad2.right_trigger - gamepad2.left_trigger).toDouble()
         var armRotationRate = -gamepad2.right_stick_y.toDouble()

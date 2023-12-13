@@ -12,15 +12,15 @@ class MecanumDrive {
     val powerRearRight: Double get() = power[3]
 
     private var forceFrontRight = Vector2.copy(FORCE_EVEN)
-    private var forceFrontLeft = -Vector2.copy(FORCE_ODD)
+    private var forceFrontLeft = Vector2.copy(FORCE_ODD)
 
     val totalYaw: Double get() = yaw+yawTrim
     var yaw: Double = 0.0
         set(newYaw) {
             val deltaYaw = newYaw - yaw
             // Counter-rotate the forces to account for robot yaw
-            forceFrontRight.rotate(-deltaYaw)
-            forceFrontLeft.rotate(-deltaYaw)
+            forceFrontRight.rotate(deltaYaw)
+            forceFrontLeft.rotate(deltaYaw)
             field = newYaw
         }
 
@@ -28,8 +28,8 @@ class MecanumDrive {
         set(newYawTrim) {
             val deltaYawTrim = newYawTrim - yawTrim
             // Counter-rotate the forces to account for robot yaw
-            forceFrontRight.rotate(-deltaYawTrim)
-            forceFrontLeft.rotate(-deltaYawTrim)
+            forceFrontRight.rotate(deltaYawTrim)
+            forceFrontLeft.rotate(deltaYawTrim)
             field = newYawTrim
         }
 
@@ -50,7 +50,7 @@ class MecanumDrive {
         yawTrim = 0.0
 
         forceFrontRight = Vector2.copy(FORCE_EVEN)
-        forceFrontLeft = -Vector2.copy(FORCE_ODD)
+        forceFrontLeft = Vector2.copy(FORCE_ODD)
     }
 
     fun stop() {
@@ -61,6 +61,6 @@ class MecanumDrive {
     }
     companion object {
         val FORCE_EVEN = Vector2(cos(Math.PI * 3/4), sin(Math.PI * 3/4))
-        val FORCE_ODD  = Vector2(cos(Math.PI * 1/4), sin(Math.PI * 1/4))
+        val FORCE_ODD  = Vector2(cos(Math.PI * 5/4), sin(Math.PI * 5/4))
     }
 }
