@@ -225,11 +225,15 @@ class BasicMecanumKotlin : OpMode() {
         // Show the elapsed game time and wheel power
         telemetry.addData("Status", "Run Time: $runtime")
         telemetry.addData("Rotor", armRotor.currentPosition)
+        telemetry.addData("Extender", armExtender.currentPosition)
+        telemetry.addData("Joint", clawJoint.position)
+        telemetry.addData("Scoop", pixelScoop.position)
+        telemetry.addData("Claw", claw.position)
 
-        telemetry.addData("Yaw", "(%.1f)", Math.toDegrees(driveBase.totalYaw))
-
-        telemetry.addData("Compass", "(%.2f)", compass.idealPower)
-        telemetry.addData(" - angle", Math.toDegrees(compass.angle))
+//        telemetry.addData("Yaw", "(%.1f)", Math.toDegrees(driveBase.totalYaw))
+//
+//        telemetry.addData("Compass", "(%.2f)", compass.idealPower)
+//        telemetry.addData(" - angle", Math.toDegrees(compass.angle))
 
         telemetry.addData("Motors", "")
         telemetry.addData("", "(%.2f) (%.2f)", driveBase.powerFrontLeft, driveBase.powerFrontRight)
